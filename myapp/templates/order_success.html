@@ -1,0 +1,32 @@
+{% extends 'basic.html' %}
+
+<title>{% block title %}Order Success{% endblock %}</title>
+
+{% block js %}{% endblock%}
+
+
+{% block body %}
+<main>
+    {% if messages %}
+            {% for msg in messages %}
+            <script>
+               alert("{{msg}}")
+            </script>
+            {% endfor %}
+    {% endif %}
+    <section style="margin-top:20px;">
+        <div class="container section-title" data-aos="fade-up">
+            <h1>Order Successful!</h1>
+            <p>Order ID: {{ order.id }}</p>
+            <p>Total Price: {{ order.total_price }}</p>
+
+            <h2 style="margin-top:30px;">Items Ordered:</h2>
+            <ul style="margin-top:30px; font-family: var(--heading-font);">
+             {% for item in order_items %}
+              <li>{{ item.product.Name }} - {{ item.quantity }} pcs - {{ item.price }}</li>
+             {% endfor %}
+            </ul>
+        </div>
+    </section>
+</main>
+{% endblock %}

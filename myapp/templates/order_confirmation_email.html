@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333333;
+        }
+        .order-details {
+            margin-top: 20px;
+        }
+        .order-details p {
+            font-size: 16px;
+            color: #555555;
+        }
+        .order-summary {
+            margin-top: 30px;
+        }
+        .order-summary table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-summary th, .order-summary td {
+            padding: 10px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thank you for your order, {{ user.first_name }}!</h1>
+            <p>Your order {{ order.id }} has been successfully placed.</p>
+        </div>
+
+        <div class="order-details">
+            <p><strong>Shipping Address:</strong></p>
+            <p>{{ shipping_address.name }}<br>
+               {{ shipping_address.address }}<br>
+               {{ shipping_address.city }}, {{ shipping_address.state }}<br>
+               Postal Code: {{ shipping_address.postal_code }}<br>
+               Phone: {{ shipping_address.phone }}<br>
+               Email: {{ shipping_address.email }}</p>
+        </div>
+
+        <div class="order-summary">
+            <h3>Order Summary:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr>
+                        <td>{{ item.product.Name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.price }} /- RS</td>
+                        <td>{{ item.get_total_price }} /- RS</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <p class="total-price">Total Price: {{ order.total_price }} /- RS</p>
+        </div>
+
+        <div class="footer">
+            <p>If you have any questions about your order, feel free to <a href="mailto:support@example.com">contact us</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

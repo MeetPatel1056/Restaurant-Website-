@@ -1,0 +1,74 @@
+{% extends 'basic.html'  %}
+<title>{% block title  %}Restaurantly{% endblock%}</title>
+
+<style>
+    .login-redirect {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .login-redirect a {
+      color: #5cb85c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .login-redirect a:hover {
+      text-decoration: underline;
+    }
+</style>
+
+{% block js %}{% endblock%}
+
+{% block body %}
+
+  <main>
+  <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2 style="margin-top:30px;">Sign In</h2>
+        <p>Login</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <div class="col-lg-8">
+            {% if messages %}
+            {% for msg in messages %}
+            <script>
+               alert("{{msg}}")
+            </script>
+            {% endfor %}
+           {% endif %}
+            <form action="CheckLogin" method="post"  class="form" data-aos="fade-up" data-aos-delay="200">{% csrf_token %}
+              <div class="row gy-4">
+                <div class="col-md-8">
+                  <input type="email"  name="Email" class="form-control" placeholder="Your Email" required="">
+                </div>
+
+                <div class="col-md-8 ">
+                  <input type="password"  class="form-control" name="Password" placeholder="Your Password" required="">
+                </div>
+
+                <div class="col-md-8 text-center">
+                  <button type="submit" >Login</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+            <div class="col-md-12 login-redirect">
+               <p>Don't  have an account? <a href="/sign_up">Sign Up Here</a></p>
+                <a href="/forgot">Forgot Password</a>
+            </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+  </main>
+
+{% endblock%}

@@ -1,0 +1,43 @@
+{% extends 'basic.html' %}
+
+<title>{% block title %}Booking History{% endblock %}</title>
+
+{% block body %}
+<main>
+    {% if messages %}
+        {% for msg in messages %}
+        <script>
+            alert("{{ msg }}");
+        </script>
+        {% endfor %}
+    {% endif %}
+
+    <section style="margin-top:20px;">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Booking History</h2>
+            <p>Review your past bookings and their details.</p>
+        </div>
+
+        {% if bookings %}
+        <div class="container booking-history" data-aos="fade-up">
+            {% for booking in bookings %}
+            <div class="booking" style="margin-top:20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--heading-font);">
+                <h3> Booking ID: {{ booking.id }}</h3>
+                <p style="margin-top:20px;">Name: {{ booking.Name }}</p>
+                <p style="margin-top:20px;">Time: {{ booking.time }}</p>
+                <p style="margin-top:20px;">Date: {{ booking.date }}</p>
+                <p style="margin-top:20px;">People: {{ booking.people }}</p>
+            </div>
+            <hr>
+            {% empty %}
+            <p>You have no bookings yet.</p>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="container" style="margin-top:20px;">
+            <p>You have no bookings yet.</p>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

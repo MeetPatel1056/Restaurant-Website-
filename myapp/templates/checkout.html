@@ -1,0 +1,113 @@
+{% extends 'basic.html' %}
+
+<title>{% block title %}Checkout{% endblock %}</title>
+
+{% block js %}{% endblock %}
+
+{% if messages %}
+    {% for msg in messages %}
+    <script>
+       alert("{{msg}}");
+    </script>
+    {% endfor %}
+{% endif %}
+
+{% block body %}
+<main>
+    <section style="margin-top:20px;">
+        <div class="container section-title" data-aos="fade-up">
+            <h2 style="margin-top:20px;">Checkout</h2>
+            <p>Review your items and complete your purchase.</p>
+        </div>
+
+        <div class="container cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item" id="checkout-item" data-aos="fade-up">
+                <div class="item-image">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.Name }}" class="Checkout-image">
+                </div>
+                <h3>{{ item.product.Name }}</h3>
+                <p>Price: {{ item.product.price }} /- RS</p>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Total: {{ item.get_total_price }} /- RS</p>
+            </div>
+            <hr>
+            {% empty %}
+            <p>Your cart is empty.</p>
+            {% endfor %}
+        </div>
+
+        <div class="container total">
+            <h3>Total Price: {{ total_price }} /- RS</h3>
+        </div>
+
+        <div class="container shipping-details" style="margin-top: 20px;" data-aos="fade-up">
+            <h3 style="margin-top:20px;" >Shipping Address</h3>
+            <form style="margin-top:20px;" method="POST" class="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" id="name" class="form-control" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" required placeholder="Enter your Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" required placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" name="address" id="address" class="form-control" required placeholder="Enter your address">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" class="form-control" required placeholder="Enter your city">
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" name="state" id="state" class="form-control" required placeholder="Enter your state">
+                </div>
+                <div class="form-group">
+                    <label for="postal_code">Postal Code</label>
+                    <input type="text" name="postal_code" id="postal_code" class="form-control" required placeholder="Enter your postal code">
+                </div>
+
+                <!-- Payment Section -->
+                <h3 style="margin-top:30px;">Payment Information</h3>
+                <div class="form-group">
+                    <label for="card_number">Card Number</label>
+                    <input type="text" name="card_number" id="card_number" class="form-control" required placeholder="Enter your card number" pattern="[0-9]{13,16}">
+                </div>
+                <div class="form-group">
+                    <label for="expiry_date">Expiry Date</label>
+                    <input type="text" name="expiry_date" id="expiry_date" class="form-control" required placeholder="MM/YY">
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" name="cvv" id="cvv" class="form-control" required placeholder="Enter CVV" pattern="[0-9]{3}">
+                </div>
+                <div class="form-group">
+                    <label for="payment_method">Payment Method</label>
+                    <select name="payment_method" id="payment_method" class="form-control" required>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="debit_card">Debit Card</option>
+                        <option value="mobile_wallet">Mobile Wallet</option>
+                    </select>
+                </div>
+
+                <h3 style="margin-top:30px;">Order Summary</h3>
+                <ul class="order-summary">
+                    {% for item in cart_items %}
+                    <li>{{ item.product.Name }} (x{{ item.quantity }}) - {{ item.get_total_price }} /- RS</li>
+                    {% endfor %}
+                    <li><strong>Total: {{ total_price }} /- RS</strong></li>
+                </ul>
+
+                <button type="submit" style="margin-top:15px;">Place Order</button>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}

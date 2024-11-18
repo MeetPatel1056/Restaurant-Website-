@@ -1,0 +1,63 @@
+{% extends 'basic.html' %}
+
+<title>{% block title %}Your Cart{% endblock %}</title>
+
+{% block js %}{% endblock %}
+
+{% block body %}
+<main>
+  <section style="margin-top:20px;">
+    <div class="container section-title" data-aos="fade-up">
+      <h2 style="margin-top:20px;">Your Cart</h2>
+      <p>Review your items and proceed to checkout.</p>
+    </div>
+    {% if messages %}
+            {% for msg in messages %}
+            <script>
+               alert("{{msg}}")
+            </script>
+            {% endfor %}
+    {% endif %}
+
+    <div class="container cart-items">
+      {% for item in cart_items %}
+        <!-- Cart Item Card -->
+        <div class="cart-item" data-aos="fade-up">
+          <div class="item-image">
+            <!-- Display the product image -->
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.Name }}" class="product-image">
+          </div>
+          <div class="item-info">
+            <h3>{{ item.product.Name }}</h3>
+            <p>Price: {{ item.product.price }} /- RS</p>
+            <p>Quantity:
+              <form method="POST" class="form" action="{% url 'update_cart' item.id %}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                <button style="margin-left:20px;" type="submit" class="btn-update">Update</button>
+              </form>
+            </p>
+            <p>Total: {{ item.get_total_price }} /- RS</p>
+          </div>
+          <div class="item-actions">
+            <a href="{% url 'remove_from_cart' item.id %}" class="form">
+              <button type="submit">Remove</button></a>
+          </div>
+        </div>
+        <hr>
+      {% empty %}
+        <div class="empty-cart">
+          <p>Your cart is empty.</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="container total">
+      <h3>Total Price: {{ total_price }} /- RS</h3>
+      <a href="/checkout" class="form">
+        <button type="submit" style="margin-top:15px;">Checkout</button>
+      </a>
+    </div>
+  </section>
+</main>
+{% endblock %}

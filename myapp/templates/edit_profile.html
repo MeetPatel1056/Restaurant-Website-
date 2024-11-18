@@ -1,0 +1,59 @@
+{% extends 'basic.html'  %}
+<title>{% block title  %}Edit Profile{% endblock%}</title>
+
+<style>
+    .form-section {
+        margin-top: 30px;
+    }
+    .form-section h2 {
+        margin-bottom: 20px;
+    }
+    .form-section .form-control {
+        margin-bottom: 15px;
+    }
+    .profile-update-btn {
+        background-color: #5cb85c;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .profile-update-btn:hover {
+        background-color: #4cae4c;
+    }
+</style>
+
+{% block body %}
+<main>
+  <section id="contact" class="contact section">
+    <div class="container" data-aos="fade-up">
+      <h2 style="margin-top:30px;">Edit Profile</h2>
+
+      <form action="/updateprofile" style="margin-top:30px;" method="post" class="form" data-aos="fade-up" data-aos-delay="100">{% csrf_token %}
+        <div class="row gy-4">
+          <div class="col-md-8">
+            <input type="text" name="name" class="form-control" placeholder="Username" value="{{ user.Name }}" required="">
+          </div>
+
+          <div class="col-md-8">
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ user.Email_id }}" required="">
+          </div>
+
+           <div class="col-md-8">
+            <input type="tel" name="phone" class="form-control" placeholder="Email" value="{{ user.Phone_no }}" required="">
+          </div>
+
+          <div class="col-md-8">
+            <input type="password" name="password" class="form-control" value="{{user.Password}}" placeholder="New Password (optional)">
+          </div>
+
+          <div class="col-md-8 text-center">
+            <button type="submit" class="profile-update-btn">Update Profile</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}

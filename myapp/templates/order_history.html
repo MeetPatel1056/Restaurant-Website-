@@ -1,0 +1,56 @@
+{% extends 'basic.html' %}
+
+<title>{% block title %}Order History{% endblock %}</title>
+
+{% block body %}
+<main>
+    {% if messages %}
+        {% for msg in messages %}
+        <script>
+            alert("{{ msg }}");
+        </script>
+        {% endfor %}
+    {% endif %}
+
+    <section style="margin-top:20px;">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Order History</h2>
+            <p>Review your past orders and their details.</p>
+        </div>
+
+        {% if orders %}
+        <div class="container order-history" data-aos="fade-up">
+            {% for order in orders %}
+            <div class="order" style="margin-top:20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                <h3> Order ID: {{ order.id }}</h3>
+                <p style="margin-top:20px;">Order Date: {{ order.created_at|date:"d M Y" }}</p>
+                <p style="margin-top:10px;"> Total Price: {{ order.total_price }} /- RS</p>
+
+                <h4 style="margin-top:10px;">Items:</h4>
+                <div class="container cart-items" style="margin-top:10px;">
+                    {% for item in order.items.all %}
+                    <div class="cart-item" id="checkout-item" data-aos="fade-up">
+                        <div class="item-image">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.Name }}" class="Checkout-image">
+                        </div>
+                        <h3>{{ item.product.Name }}</h3>
+                        <p>Price: {{ item.product.price }} /- RS</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            {% empty %}
+            <p>You have no orders yet.</p>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="container" style="margin-top:20px;">
+            <p>You have no orders yet.</p>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

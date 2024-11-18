@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+<title>Buy Now Checkout</title>
+
+{% block body %}
+<main>
+    <section>
+        <h2>Buy Now Checkout</h2>
+        <p>Review your item and complete your purchase.</p>
+
+        <div>
+            <h3>{{ product.Name }}</h3>
+            <p>Price: {{ product.price }} /- RS</p>
+            <p>Quantity: {{ quantity }}</p>
+            <p>Total: {{ total_price }} /- RS</p>
+        </div>
+
+        <div>
+            <h3>Total Price: {{ total_price }} /- RS</h3>
+        </div>
+
+        <form method="POST" class="form">
+            {% csrf_token %}
+            <button type="submit">PlaceOrder</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

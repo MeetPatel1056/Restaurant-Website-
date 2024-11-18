@@ -27,7 +27,7 @@ a contact form.
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/restaurant-booking-order.git
+   git clone https://github.com/MeetPatel1056/Restaurant-Website-.git
    cd restaurant-booking-order
    ```
 2. Create a virtual environment and activate it:
